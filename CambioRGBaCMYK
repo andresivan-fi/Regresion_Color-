@@ -1,0 +1,139 @@
+#include <stdio.h>
+
+//Estructura para RGB
+typedef struct {
+int red; //Color rojo
+int green; //Color verde 
+int blue; //Color azul
+}RGB;
+
+//Estructur para CMYK
+typedef struct {
+float cian;      //Color cian 
+float magenta;   //Color mangenta 
+float yellow;    //Color amarillo 
+float black;      //Color negro 
+} CMYK;
+ 
+//Declaraciones globales 
+RGB *color;
+RGB valor;
+int x, m, k;
+CMYK convert;
+CMYK *resultado;
+float black=0;
+
+
+
+//Declaraión de funciones 
+RGB RegistroValor(RGB valor);
+CMYK ConversionColor(RGB *color, CMYK convert);
+
+//Declaración de procedimietos
+
+
+//Algoritmo 
+int main (void)
+{
+    //Declaraciones locales 
+    color = &valor;
+    resultado = &convert; 
+    
+    //algorirmo 
+    
+    valor= RegistroValor(valor);
+    if (x==1 && m==1 && k==1)
+    {
+        convert= ConversionColor(color, convert);
+        black=((*resultado).black)*100;
+        puts ("Su color en CMYK es");
+        printf("Su porcentaje de cian es %.2f\n", (*resultado).cian);
+        printf("Su porcentaje de magenta es %.2f\n", (*resultado).magenta);
+        printf("Su porcentaje de amarillo es %.2f\n", (*resultado).yellow);
+        printf("Su porcentaje de negro es %.2f\n", black);
+
+    }
+    else
+    {
+        puts("No puede haber numeros que rebasen doscientos cincuenta y cinco, ni numeros menores a menos uno");
+    }
+
+    return 0;
+}
+
+
+
+RGB RegistroValor(RGB valor)
+{
+    //Declaraciones locales 
+    
+    //Algoritmo
+    
+    puts("A continuacion insertara su color en RGB");
+    puts("Inserte el numero correspondiente a rojo");
+    scanf("%d", &valor.red);
+    puts("Inserte el numero correspondiente a verde");
+    scanf("%d", &valor.green);
+    puts("Inserte el numero correspondiente al azul");
+    scanf("%d", &valor.blue);
+    //Verificar que ningún numero sea cero. 
+    if (valor.red>-1 && valor.red<255)
+    {
+        x=1; 
+    }
+    else    
+    {
+         x=0;
+    }
+    if (valor.green>-1 && valor.green<255)
+    {
+         m=1; 
+    }
+    else    
+    {
+         m=0;
+    }
+    if (valor.blue>-1 && valor.blue<255)
+    {
+         k=1; 
+    }
+    else    
+    {
+         k=0;
+    }
+ 
+ 
+   return valor;
+}
+
+CMYK ConversionColor(RGB *color, CMYK convert)
+{
+    //Declaraciones locales
+    float Negro[3]={0};
+    int i=0;
+    int max=0;
+    float r=0, g=0, b=0;
+
+    
+    //Algoritmos
+    r = (*color).red/255.0;
+    g= (*color).green/255.0;
+    b = (*color).blue/255.0;
+    Negro[0]= r;
+    Negro[1] = g;
+    Negro[2] = b;
+    for (i=0; i<3; i++)
+    {
+        if (Negro[i]>Negro[max])
+        {
+        max=i;
+        }      
+    }
+    convert.black=1-Negro[max];
+    convert.cian= ((1-r-convert.black) / (1-convert.black))*100;
+    convert.magenta= ((1-g-convert.black) / (1-convert.black))*100;
+    convert.yellow= ((1-b-convert.black) / (1-convert.black))*100;
+   
+
+    return convert;
+}
